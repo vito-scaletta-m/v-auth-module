@@ -1,8 +1,8 @@
 {
-  "name": "my-module",
+  "name": "@nuxtjs/v-auth",
   "version": "1.0.0",
   "description": "My new Nuxt module",
-  "repository": "your-org/my-module",
+  "repository": "vito-scaletta-m/v-auth-module",
   "license": "MIT",
   "type": "module",
   "exports": {
