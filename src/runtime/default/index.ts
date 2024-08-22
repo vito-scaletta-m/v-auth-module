@@ -1,4 +1,4 @@
-import { ModuleOptions } from "../types/options";
+import type { ModuleOptions } from "../types/options";
 
 export const moduleOptionsDefault: ModuleOptions = {
   middleware: {

@@ -5,7 +5,7 @@ import { githubLogIn } from "../server/github"
 import { googleLogIn } from "../server/google"
 import {  useAuthLoaderStore, useAuthStore} from "../store"
 import { defaultRequestAction, refreshAccessToken } from "./api"
-import { ModuleOptions } from "../types/options"
+import type { ModuleOptions } from "../types/options"
 
 type MethodsTypes = "GET" | "HEAD" | "PATCH" | "POST" | "PUT" | "DELETE"
 

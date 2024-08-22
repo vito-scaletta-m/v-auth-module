@@ -29,8 +29,6 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.12.4",
-    "@nuxtjs/composition-api": "^0.34.0",
     "pinia": "^2.2.2"
   },
   "devDependencies": {
@@ -47,5 +45,13 @@
     "typescript": "latest",
     "vitest": "^2.0.3",
     "vue-tsc": "^2.0.26"
+  },
+  "overrides": {
+    "@nuxt/kit": {
+      "json5": ">=2.2.2"
+    },
+    "@nuxtjs/eslint-config-typescript": {
+      "json5": ">=1.0.2"
+    }
   }
 }

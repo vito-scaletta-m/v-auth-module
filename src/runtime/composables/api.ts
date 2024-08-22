@@ -13,7 +13,7 @@ export const defaultRequestAction = (middlewareAccessToken?: string) => {
 
 		// @ts-ignore // TODO
 		headers: {
-			authorization: import.meta.server && accessToken 
+			authorization: import.meta.server && accessToken
 		}
 	})
 
@@ -33,7 +33,7 @@ export const refreshAccessToken = async (middlewareRefreshToken?: string): Promi
 			}
 		}) as RefreshAccessTokenType
 
-		return response 
+		return response
 
 	} catch (error) {
 		console.log('refresh token error', error);

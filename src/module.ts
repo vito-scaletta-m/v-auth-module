@@ -1,5 +1,5 @@
 import { defineNuxtModule, addRouteMiddleware, addTemplate,  createResolver, addServerHandler, addPlugin, addImportsDir, addComponentsDir, useRuntimeConfig } from '@nuxt/kit'
-import { ModuleOptions } from './runtime/types/options'
+import type { ModuleOptions } from './runtime/types/options'
 import { moduleOptionsDefault } from './runtime/default'
 
 // Module options TypeScript interface definition
