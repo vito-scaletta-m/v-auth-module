@@ -36,3 +36,12 @@ export type AuthUserDataType = {
 	isActivated: boolean
 	nickname: string
 }
+
+export type BaseInvalidResponse = {
+	message: string
+	stack: object
+	status: number
+	success: boolean
+}
+
+export type BaseRequestResult<T> = T | BaseInvalidResponse

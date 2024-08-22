@@ -1,10 +1,10 @@
 import type { AuthResponseData, LogInRequestData, SignInRequestData } from "../types/index"
-import type { BaseRequestResult } from "~/types"
-import { isResponseInvalid } from "~/components/helpers/response"
-import appRoutes from "~/constants/routes"
+import type { BaseRequestResult } from "../types/index"
+import { isResponseInvalid } from "../helpers/response"
+// import appRoutes from "~/constants/routes"
 import { useAuthStore } from "../store"
 import { serverAuthRoutes } from ".."
-import { useApiFetch } from '../composables/index'
+import { useApiFetch, useConfig } from '../composables/index'
 
 
 // need for log-in and sign-up
@@ -13,12 +13,18 @@ const setAuthUserAfterSignIn = (result: BaseRequestResult<AuthResponseData>): bo
 		return false
 	} else {
 		const authStore = useAuthStore()
-		const localePath = useLocalePath();	
+		// const localePath = useLocalePath();
 
 		authStore.setAuthUser(result)
 		authStore.setAuthStatus(true)
 
-		navigateTo(localePath(appRoutes.dashboard))
+    const appConfig = useConfig()
+
+		// navigateTo(localePath(appConfig.middleware.auth.errorRedirectUrl))
+		navigateTo(appConfig.middleware.auth.errorRedirectUrl)
+
+
+		// navigateTo(localePath(appRoutes.dashboard))
 
 		return true
 	}

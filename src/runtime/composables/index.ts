@@ -5,6 +5,7 @@ import { githubLogIn } from "../server/github"
 import { googleLogIn } from "../server/google"
 import {  useAuthLoaderStore, useAuthStore} from "../store"
 import { defaultRequestAction, refreshAccessToken } from "./api"
+import { ModuleOptions } from "../types/options"
 
 type MethodsTypes = "GET" | "HEAD" | "PATCH" | "POST" | "PUT" | "DELETE"
 
@@ -18,7 +19,7 @@ export const useApiFetch = () => {
 		return errorHandler(() => fetchWithAuth(url, 'POST', requestData))
 	}
 
-	const getMethod = async <T>(url: string, requestData?: Record<string, any>): Promise<T> => {		
+	const getMethod = async <T>(url: string, requestData?: Record<string, any>): Promise<T> => {
 		return errorHandler(() => fetchWithAuth(url, 'GET', requestData))
 	}
 
@@ -40,14 +41,14 @@ export const authFetch =  () =>  {
 
 	const fetchWithAuth = async (url: string, method: MethodsTypes, body?: any) => {
 		try {
-			
+
 			const response = await fetchDefaultAction(url, method, body)
-			
+
 			return response
-			
+
 		} catch (error) {
 			console.log(error);
-			
+
 			// @ts-ignore
 			const errorStatusCode = error?.response?.status
 
@@ -56,16 +57,16 @@ export const authFetch =  () =>  {
 
 				if(refreshTokenResponse?.result){
 					const response = await fetchDefaultAction(url, method, body)
-					
+
 					return response
 				} else {
 					console.log('LOGOUT'); // TODO
 				}
 
-				
+
 			} else {
 				throw error
-			}	
+			}
 		}
 	}
 
@@ -82,7 +83,7 @@ export const useAuth = () => {
 	const authLoaderStore = useAuthLoaderStore()
 
 	const isAuth = computed(() => authStore.isAuth)
-	
+
 	const authUser = computed(() => authStore.getAuthUser)
 
 	const isAuthLoaded = computed(() => authLoaderStore.isLoading)
@@ -95,11 +96,11 @@ export const useAuth = () => {
 	}
 }
 export const useAuthActions = () => {
-	
+
 	return {
 		emailPasswordLogIn,
 		emailPasswordSignUp,
-		
+
 		googleLogIn,
 		githubLogIn,
 
@@ -118,15 +119,15 @@ const useAuthInit = () => {
 		try {
 			// console.log('isAuthLoaded', isAuthLoaded.value);
 			// console.log('auth loader status before init', isAuthLoaded.value);
-	
+
 			// check if this first auth check
-			if(!isAuthLoaded.value){	
+			if(!isAuthLoaded.value){
 				const result = await userProfile()
 
 				if(result){
 					authLoaderStore.setAppLoading(true)
 				}
-	
+
 				// console.log(result);
 			}
 		} catch (error) {
@@ -147,7 +148,7 @@ const useApiError = () => {
 		try {
 			const result = await fn()
 			// console.log('result in error handler', result);
-			
+
 			return result
 		} catch (error) {
 			// console.log(error);
@@ -156,7 +157,7 @@ const useApiError = () => {
 			// @ts-ignore // TODO
 			const errorMessage = error?.response?._data?.message
 			// console.log('error message in error handler', errorMessage);
-			
+
 			if(errorMessage){
 				// showErrorToast(errorMessage)
 			}
@@ -166,5 +167,15 @@ const useApiError = () => {
 	return {
 		errorHandler
 	}
+
+}
+
+export const useConfig = () => {
+
+  const runtimeConfig = useRuntimeConfig()
+
+  const config = runtimeConfig.config as ModuleOptions
+
+  return config
 
 }

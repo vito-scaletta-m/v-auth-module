@@ -1,4 +1,4 @@
-import { defineNuxtModule, addRouteMiddleware, addTemplate,  createResolver, addServerHandler, addPlugin, addImportsDir, addComponentsDir } from '@nuxt/kit'
+import { defineNuxtModule, addRouteMiddleware, addTemplate,  createResolver, addServerHandler, addPlugin, addImportsDir, addComponentsDir, useRuntimeConfig } from '@nuxt/kit'
 import { ModuleOptions } from './runtime/types/options'
 import { moduleOptionsDefault } from './runtime/default'
 
@@ -13,9 +13,10 @@ export default defineNuxtModule<ModuleOptions>({
   // Default configuration options of the Nuxt module
   defaults: moduleOptionsDefault,
   setup(_options, _nuxt) {
-    console.log('v-auth options', _options);
-
+    // @ts-ignore
     const { resolve } = createResolver(import.meta.url);
+
+    _nuxt.options.runtimeConfig.config = _options
 
     // Регистрируем middleware
     addRouteMiddleware({
@@ -44,5 +45,10 @@ export default defineNuxtModule<ModuleOptions>({
       // Убедитесь, что используете корректные параметры, если они нужны
       prefix: 'Global', // Опционально: префикс для именования компонентов
     });
+
+    const options = useRuntimeConfig()
+
+    console.log('options', options);
+
   },
 })

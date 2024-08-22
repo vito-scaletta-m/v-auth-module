@@ -1,4 +1,5 @@
-import appRoutes from "~/constants/routes";
+// import appRoutes from "~/constants/routes";
+import { useConfig } from "../../composables";
 import { useAuthStore } from "../../store";
 
 export default defineNuxtRouteMiddleware((to, from) => {
@@ -10,12 +11,15 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   if (!authStore.isAuth) {
 
-		const localePath = useLocalePath();	
+		// const localePath = useLocalePath();
 
-		navigateTo(localePath(appRoutes.dashboard))
+    const appConfig = useConfig()
+
+		// navigateTo(localePath(appConfig.middleware["not-auth"].errorRedirectUrl))
+		navigateTo(appConfig.middleware["not-auth"].errorRedirectUrl)
 
 		console.log('navigate to login');
-		
+
     // return navigateTo('/login');
   }
 });

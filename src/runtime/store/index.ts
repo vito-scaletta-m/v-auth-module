@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
 
 	const getAuthUser = computed(() => userData.value)
 
-  return { 
+  return {
 		setAuthUser,
 		clearAuthUser,
 		getAuthUser,
@@ -31,9 +31,9 @@ export const useAuthStore = defineStore('auth', () => {
 })
 
 export const useAuthLoaderStore = defineStore('auth-loader', () => {
-	
+
 	const isLoading = ref(false)
-	
+
 	const setAppLoading = (value: boolean) => {
 		isLoading.value = value
 	}

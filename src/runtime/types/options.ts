@@ -3,6 +3,7 @@ type ModuleEndpoints = 'signIn' | 'signOut' | 'signUp' | 'getSession' | 'refresh
 type ModuleEndpointsOptions = {
 	path: string
 	method: string
+  redirectUrl?: string
 }
 
 type ModuleMiddleware = 'auth' | 'not-auth'
