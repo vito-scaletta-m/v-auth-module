@@ -1,9 +1,10 @@
 import { defineAuthUser, refreshAccessToken } from "../../composables/api";
+import { defineEventHandler } from 'h3';
 
 const authServerMiddlewareLog = (message: string, value?: any) => {
 	// temporarily hidden
 	console.log(`<<< APP SERVER AUTH MIDDLEWARE > ${message}`);
-	console.log(JSON.stringify(value, null, 2));		
+	console.log(JSON.stringify(value, null, 2));
 }
 
 const startedLogs = () => {
@@ -13,7 +14,7 @@ const startedLogs = () => {
 	console.log();
 }
 
-export default defineEventHandler(async (event) => {	
+export default defineEventHandler(async (event) => {
 
 	startedLogs()
 
@@ -52,8 +53,8 @@ export default defineEventHandler(async (event) => {
 		}
 
 
-	} 
-	
+	}
+
 	// else {
 	// 	sendError(event, createError({ statusCode: 401, statusMessage: 'Unauthorized' }))
 	// }
