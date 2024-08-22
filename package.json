@@ -2,7 +2,7 @@
   "name": "@nuxtjs/v-auth",
   "version": "1.0.0",
   "description": "module for auth in nuxt 3",
-  "repository": "vito-scaletta-m/v-auth-module",
+  "repository": "https://github.com/vito-scaletta-m/v-auth-module",
   "license": "MIT",
   "type": "module",
   "exports": {
