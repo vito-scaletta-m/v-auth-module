@@ -7,7 +7,7 @@ Find and replace all on all files (CMD+SHIFT+F):
 - Description: My new Nuxt module
 -->
 
-# My Module
+# V-AUTH-NUXT
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -32,7 +32,7 @@ My new Nuxt module for doing amazing things.
 Install the module to your Nuxt application with one command:
 
 ```bash
-npx nuxi module add @nuxtjs/v-auth
+npx nuxi module add v-auth-nuxt
 ```
 
 That's it! You can now use My Module in your Nuxt app ✨
