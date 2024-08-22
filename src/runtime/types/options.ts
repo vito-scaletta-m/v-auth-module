@@ -13,6 +13,7 @@ type ModuleMiddlewareOptions = {
 }
 
 export type ModuleOptions = {
+  apiBaseUrl: string
 	middleware: Record<ModuleMiddleware, ModuleMiddlewareOptions>
 	endpoints: Record<ModuleEndpoints, ModuleEndpointsOptions>
 }

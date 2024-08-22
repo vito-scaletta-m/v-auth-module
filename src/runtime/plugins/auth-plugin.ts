@@ -4,11 +4,12 @@ export default defineNuxtPlugin((nuxtApp) => {
 
 	console.log('auth plugin');
 
-	const authStore = useAuthStore()
-  
-	const authUserCookie = useCookie('authUser').value as AuthUserDataType | undefined;	
-	
+
+	const authUserCookie = useCookie('authUser')?.value as AuthUserDataType | undefined;
+
 	if(authUserCookie){
+    const authStore = useAuthStore()
+
 		authStore.setAuthUser(authUserCookie) // ADD TYPE
 		authStore.setAuthStatus(true)
 	}

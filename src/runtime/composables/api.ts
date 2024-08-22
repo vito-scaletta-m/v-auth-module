@@ -1,13 +1,14 @@
+import { useConfig } from "."
 import { serverAuthRoutes } from ".."
 import type { AuthUserDataType, RefreshAccessTokenType } from "../types"
 
 export const defaultRequestAction = (middlewareAccessToken?: string) => {
-	const config = useRuntimeConfig()
+	const config = useConfig()
 
 	const accessToken = middlewareAccessToken || getAccessToken()
 
 	const fetchDefault = $fetch.create({
-		baseURL: `${config.public.apiBaseUrl}`,
+		baseURL: `${config.apiBaseUrl}`,
 		credentials: 'include',
 		retry: false,
 
