@@ -1,3 +1,4 @@
+import { computed, ref } from 'vue'
 import type { AuthUserDataType } from '../types'
 import { defineStore } from 'pinia'
 

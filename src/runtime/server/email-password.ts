@@ -1,10 +1,10 @@
 import type { AuthResponseData, LogInRequestData, SignInRequestData } from "../types/index"
 import type { BaseRequestResult } from "../types/index"
 import { isResponseInvalid } from "../helpers/response"
-// import appRoutes from "~/constants/routes"
 import { useAuthStore } from "../store"
 import { serverAuthRoutes } from ".."
 import { useApiFetch, useConfig } from '../composables/index'
+// import { navigateTo } from '#imports'; // AS IN EXAMPLE
 
 
 // need for log-in and sign-up

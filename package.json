@@ -20,7 +20,7 @@
   "scripts": {
     "prepack": "nuxt-module-build build",
     "dev": "nuxi dev playground",
-    "dev:build": "nuxi build playground",
+    "dev:build": "nuxi build",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
@@ -35,7 +35,6 @@
     "@nuxt/module-builder": "^0.8.1",
     "@nuxt/schema": "^3.12.4",
     "@nuxt/test-utils": "^3.14.1",
-    "@pinia/nuxt": "^0.5.4",
     "@types/node": "^20.14.11",
     "changelogen": "^0.5.5",
     "eslint": "^9.7.0",
@@ -54,6 +53,7 @@
     }
   },
   "dependencies": {
+    "defu": "^6.1.4",
     "h3": "^1.12.0",
     "pinia": "^2.2.2"
   }

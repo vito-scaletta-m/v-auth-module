@@ -1,6 +1,7 @@
-import { defineNuxtModule, useLogger, addRouteMiddleware, addTemplate,  createResolver, addServerHandler, addPlugin, addImportsDir, addComponentsDir, useRuntimeConfig } from '@nuxt/kit'
+import { defineNuxtModule, useLogger, addRouteMiddleware, addTemplate,  createResolver, addServerHandler, addPlugin, addImportsDir, addComponentsDir, addImports } from '@nuxt/kit'
 import type { ModuleOptions } from './runtime/types/options'
 import { moduleOptionsDefault } from './runtime/default'
+import { defu } from 'defu'
 
 // Module options TypeScript interface definition
 export type { ModuleOptions }
@@ -14,14 +15,20 @@ export default defineNuxtModule<ModuleOptions>({
   },
   // Default configuration options of the Nuxt module
   defaults: moduleOptionsDefault,
-  setup(_options, _nuxt) {
-
+  setup(options, nuxt) {
     const logger = useLogger(PACKAGE_NAME)
 
     // @ts-ignore
     const { resolve } = createResolver(import.meta.url);
 
-    _nuxt.options.runtimeConfig.config = _options
+    nuxt.hooks.hook("nitro:config", async (nitroConfig) => {
+      nitroConfig.externals = nitroConfig.externals || {};
+      nitroConfig.externals.inline = nitroConfig.externals.inline || [];
+      nitroConfig.externals.inline.push(resolve("./runtime"));
+    });
+
+    nuxt.options.runtimeConfig = nuxt.options.runtimeConfig || { public: {} }
+    nuxt.options.runtimeConfig.public.auth = options
 
     // Регистрируем middleware
     addRouteMiddleware({
@@ -35,8 +42,8 @@ export default defineNuxtModule<ModuleOptions>({
 		});
 
 		addServerHandler({
-      handler: resolve('runtime/middleware/server/auth'),
-      // method: 'auth',
+      handler: resolve('runtime/server/server-auth-middleware'),
+      // method: 'get',
 			// middleware: true,
 			route: '' // Применяется ко всем запросам
     });
@@ -45,11 +52,11 @@ export default defineNuxtModule<ModuleOptions>({
 
 		addPlugin(resolve('runtime/plugins/auth-plugin'));
 
-		addComponentsDir({
-      path: resolve('runtime/components'),
-      // Убедитесь, что используете корректные параметры, если они нужны
-      prefix: 'Global', // Опционально: префикс для именования компонентов
-    });
+		// addComponentsDir({
+    //   path: resolve('runtime/components'),
+    //   // Убедитесь, что используете корректные параметры, если они нужны
+    //   prefix: 'Global', // Опционально: префикс для именования компонентов
+    // });
 
     logger.success('`v-auth-nuxt` setup done')
 

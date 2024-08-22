@@ -6,6 +6,8 @@ import { googleLogIn } from "../server/google"
 import {  useAuthLoaderStore, useAuthStore} from "../store"
 import { defaultRequestAction, refreshAccessToken } from "./api"
 import type { ModuleOptions } from "../types/options"
+import { useRuntimeConfig } from "#imports" // AS IN EXAMPLE
+import { computed } from 'vue'; // AS IN EXAMPLE
 
 type MethodsTypes = "GET" | "HEAD" | "PATCH" | "POST" | "PUT" | "DELETE"
 
@@ -174,7 +176,10 @@ export const useConfig = () => {
 
   const runtimeConfig = useRuntimeConfig()
 
-  const config = runtimeConfig.config as ModuleOptions
+  const config = runtimeConfig.public.auth as ModuleOptions
+
+  console.log('config', config);
+
 
   return config
 

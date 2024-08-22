@@ -1,62 +1,65 @@
-import { defineAuthUser, refreshAccessToken } from "../../composables/api";
-import { defineEventHandler } from 'h3';
+// import { defineAuthUser, refreshAccessToken } from '../../composables/api';
+// import { defineEventHandler, getCookie, setCookie } from 'h3'; // AS IN EXAMPLE
 
-const authServerMiddlewareLog = (message: string, value?: any) => {
-	// temporarily hidden
-	console.log(`<<< APP SERVER AUTH MIDDLEWARE > ${message}`);
-	console.log(JSON.stringify(value, null, 2));
-}
+// const authServerMiddlewareLog = (message: string, value?: any) => {
+// 	// temporarily hidden
+// 	console.log(`<<< APP SERVER AUTH MIDDLEWARE > ${message}`);
+// 	console.log(JSON.stringify(value, null, 2));
+// }
 
-const startedLogs = () => {
-	// temporarily hidden
-	console.log();
-	console.log();
-	console.log();
-}
+// const startedLogs = () => {
+// 	// temporarily hidden
+// 	console.log();
+// 	console.log();
+// 	console.log();
+// }
 
-export default defineEventHandler(async (event) => {
+// export default defineEventHandler(async (event) => {
 
-	startedLogs()
+// 	startedLogs()
 
-  const accessToken = getCookie(event, 'accessToken');
-  const refreshToken = getCookie(event, 'refreshToken');
+//   const accessToken = getCookie(event, 'accessToken');
+//   const refreshToken = getCookie(event, 'refreshToken');
 
-	authServerMiddlewareLog('access token', accessToken)
-	authServerMiddlewareLog('refresh token', refreshToken)
+// 	authServerMiddlewareLog('access token', accessToken)
+// 	authServerMiddlewareLog('refresh token', refreshToken)
 
-	const setUserToCookie = (userData: any) => {
-		setCookie(event, 'authUser', JSON.stringify(userData), { httpOnly: false, secure: true });
-	}
+// 	const setUserToCookie = (userData: any) => {
+// 		setCookie(event, 'authUser', JSON.stringify(userData), { httpOnly: false, secure: true });
+// 	}
 
-	const getAndSetAuthUser = async (accessToken?: string) => {
-		const authUser = await defineAuthUser(accessToken)
+// 	const getAndSetAuthUser = async (accessToken?: string) => {
+// 		const authUser = await defineAuthUser(accessToken)
 
-		authServerMiddlewareLog('auth user', authUser)
+// 		authServerMiddlewareLog('auth user', authUser)
 
-		setUserToCookie(authUser)
-	}
+// 		setUserToCookie(authUser)
+// 	}
 
-	if(accessToken && refreshToken) {
-		authServerMiddlewareLog('access and refresh token exist')
+// 	if(accessToken && refreshToken) {
+// 		authServerMiddlewareLog('access and refresh token exist')
 
-		getAndSetAuthUser(accessToken)
+// 		getAndSetAuthUser(accessToken)
 
-	} else if( !accessToken && refreshToken) {
-		authServerMiddlewareLog('refresh exist / access not exist')
+// 	} else if( !accessToken && refreshToken) {
+// 		authServerMiddlewareLog('refresh exist / access not exist')
 
-		const newAccessTokenData = await refreshAccessToken(refreshToken)
+// 		const newAccessTokenData = await refreshAccessToken(refreshToken)
 
-		authServerMiddlewareLog('new access token', newAccessTokenData)
+// 		authServerMiddlewareLog('new access token', newAccessTokenData)
 
-		if(newAccessTokenData?.result){
-			getAndSetAuthUser(newAccessTokenData?.token)
-		}
+// 		if(newAccessTokenData?.result){
+// 			getAndSetAuthUser(newAccessTokenData?.token)
+// 		}
 
 
-	}
+// 	} else {
+//     console.log('no access and no refresh token');
 
-	// else {
-	// 	sendError(event, createError({ statusCode: 401, statusMessage: 'Unauthorized' }))
-	// }
+//   }
 
-});
+// 	// else {
+// 	// 	sendError(event, createError({ statusCode: 401, statusMessage: 'Unauthorized' }))
+// 	// }
+
+// });

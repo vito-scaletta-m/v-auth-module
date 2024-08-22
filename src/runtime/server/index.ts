@@ -4,6 +4,7 @@ import { isResponseInvalid } from "../helpers/response"
 import { useAuthStore } from "../store"
 import { serverAuthRoutes } from ".."
 import { authFetch, useConfig } from "../composables"
+// import { navigateTo } from '#imports'; // AS IN EXAMPLE
 
 export const logOut = async (): Promise<boolean| null> => {
 	const { fetchWithAuth } = authFetch()

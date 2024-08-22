@@ -1,6 +1,7 @@
-// import appRoutes from "~/constants/routes";
 import { useConfig } from "../../composables";
 import { useAuthStore } from "../../store";
+import { defineNuxtRouteMiddleware } from '#imports' // AS IN EXAMPLE
+// import { navigateTo } from '#imports'; // AS IN EXAMPLE
 
 export default defineNuxtRouteMiddleware((to, from) => {
 	const authStore = useAuthStore()
@@ -9,7 +10,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
 	console.log('is user auth', authStore.isAuth);
 
-  if (!authStore.isAuth) {
+  if (authStore.isAuth) {
 
 		// const localePath = useLocalePath();
 

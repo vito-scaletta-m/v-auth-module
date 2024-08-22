@@ -1,9 +1,13 @@
 import { useConfig } from "."
+// import { useCookie } from '#imports'; // AS IN EXAMPLE
 import { serverAuthRoutes } from ".."
 import type { AuthUserDataType, RefreshAccessTokenType } from "../types"
 
 export const defaultRequestAction = (middlewareAccessToken?: string) => {
 	const config = useConfig()
+
+  console.log('api base url', config.apiBaseUrl);
+
 
 	const accessToken = middlewareAccessToken || getAccessToken()
 
@@ -58,6 +62,7 @@ export const defineAuthUser = async (middlewareAccessToken?: string): Promise<Au
 
 export const getAccessToken = () => {
 	try {
+    console.log('t is server', import.meta.server);
 		if (import.meta.server) {
 			const accessToken = useCookie('accessToken')?.value
 			// console.log('access token', accessToken);
@@ -74,8 +79,10 @@ export const getAccessToken = () => {
 export const getRefreshToken = () => {
 	try {
 		// console.log('get refresh token > is server mode', import.meta.server);
+    console.log('rt is server', import.meta.server);
+
 		if (import.meta.server) {
-			const refreshToken = useCookie('refreshToken').value
+			const refreshToken = useCookie('refreshToken')?.value
 			// console.log('get refresh token in server mode', refreshToken);
 			return refreshToken
 		}
