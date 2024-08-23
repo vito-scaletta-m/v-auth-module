@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from "#imports"; // AS IN EXAMPLE
-// import { useCookie } from '#imports';  // AS IN EXAMPLE
+import { useCookie } from 'nuxt/app';  // AS IN EXAMPLE
 import { useAuthStore } from "../store";
 import type { AuthUserDataType } from "../types";
 

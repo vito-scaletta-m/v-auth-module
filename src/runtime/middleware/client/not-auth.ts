@@ -1,7 +1,7 @@
 import { useConfig } from "../../composables";
 import { useAuthStore } from "../../store";
 import { defineNuxtRouteMiddleware } from '#imports' // AS IN EXAMPLE
-// import { navigateTo } from '#imports'; // AS IN EXAMPLE
+import { navigateTo } from '#imports'; // AS IN EXAMPLE
 
 export default defineNuxtRouteMiddleware((to, from) => {
 	const authStore = useAuthStore()
