@@ -1,46 +1,45 @@
-import { computed, ref } from 'vue'
-import type { AuthUserDataType } from '../types'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', () => {
 
-	const userData = ref<AuthUserDataType | null>(null)
+	const sessionData = ref<any | null>(null)
 
 	const isAuth = ref(false)
 
-	const setAuthUser = (data: AuthUserDataType) => {
-		userData.value = data
+	const setSession = (data: any) => {
+		sessionData.value = data
 	}
 
-	const clearAuthUser = () => {
-		userData.value = null
+	const clearSession = () => {
+		sessionData.value = null
 	}
 
-	const setAuthStatus = (value: boolean) => {
+	const setSessionAuthStatus = (value: boolean) => {
 		isAuth.value = value
 	}
 
-	const getAuthUser = computed(() => userData.value)
-
   return {
-		setAuthUser,
-		clearAuthUser,
-		getAuthUser,
+		setSession,
+		clearSession,
+		sessionData,
 		isAuth,
-		setAuthStatus
+		setSessionAuthStatus
 	}
 })
 
-export const useAuthLoaderStore = defineStore('auth-loader', () => {
 
-	const isLoading = ref(false)
+// DEPRECATED
+// export const useAuthLoaderStore = defineStore('auth-loader', () => {
 
-	const setAppLoading = (value: boolean) => {
-		isLoading.value = value
-	}
+// 	const isLoading = ref(false)
 
-	return {
-		setAppLoading,
-		isLoading
-	}
-})
+// 	const setAppLoading = (value: boolean) => {
+// 		isLoading.value = value
+// 	}
+
+// 	return {
+// 		setAppLoading,
+// 		isLoading
+// 	}
+// })

@@ -1,6 +1,11 @@
+import useConfig from "../composables/useConfig";
+
 export const githubLogIn = async () => {
+
+  const config = useConfig()
+
 	window.open(
-		`http://localhost:3000/auth/github/callback`,
+		`${config.apiBaseUrl}/auth/github/callback`,
 		"_self"
 	);
 }

@@ -1,5 +1,6 @@
 import type { UserAuthType } from "../enums"
 
+// available for set custom
 export type LogInRequestData = {
 	email: string
 	password: string
@@ -11,18 +12,11 @@ export type SignInRequestData = {
 	passwordConfirmation: string
 }
 
-
-export type AuthResponseData = BaseUserData
-
 export type LogoutResponseData = {
 	result: boolean
 }
 
-
-
-
-
-// new types
+// strick types
 export type RefreshAccessTokenType = {
 	result: boolean,
 	token?: string

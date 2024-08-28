@@ -1,6 +1,11 @@
+import useConfig from "../composables/useConfig";
+
 export const googleLogIn = async () => {
+
+  const config = useConfig()
+
 	window.open(
-		`http://localhost:3000/auth/google/callback`,
+		`${config.apiBaseUrl}/auth/google/callback`,
 		"_self"
 	);
 }

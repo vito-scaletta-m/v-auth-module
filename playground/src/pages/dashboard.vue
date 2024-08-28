@@ -3,24 +3,23 @@
 
 		<div>
 			<h2 class=" text-black text-lg">
-				Full available info about you:
+				Welcome to your dashboard , {{ sessionData?.email }} this is full available info about you:
 			</h2>
 
-			<pre class="mt-4">{{ authUser }}</pre>
+			<pre class="mt-4">{{ sessionData }}</pre>
 		</div>
 
 	</div>
 </template>
 
 <script setup lang="ts">
-import { definePageMeta } from '#imports'
-// import { useAuth } from '#imports';
+import { definePageMeta, useAuth } from '#imports'
 
 definePageMeta({
   middleware: 'auth'
 })
 
-const { authUser } = useAuth()
+const { sessionData } = useAuth()
 
 </script>
 

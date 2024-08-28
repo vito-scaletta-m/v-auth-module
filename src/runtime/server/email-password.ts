@@ -1,49 +1,58 @@
-import type { AuthResponseData, LogInRequestData, SignInRequestData } from "../types/index"
-import type { BaseRequestResult } from "../types/index"
+import type { LogInRequestData, SignInRequestData } from "../types/index"
 import { isResponseInvalid } from "../helpers/response"
 import { useAuthStore } from "../store"
-import { serverAuthRoutes } from ".."
-import { useApiFetch, useConfig } from '../composables/index'
-// import { navigateTo } from '#imports'; // AS IN EXAMPLE
+import useRedirect from "../composables/useRedirect"
+import useConfig from "../composables/useConfig"
+import useAuthFetch from '../composables/useAuthFetch'
+
 
 
 // need for log-in and sign-up
-const setAuthUserAfterSignIn = (result: BaseRequestResult<AuthResponseData>): boolean| null => {
+const setSessionAfterSignIn = (result: any, options: {
+  redirectUrl?: string
+}): boolean| null => {
 	if(isResponseInvalid(result)){
 		return false
 	} else {
 		const authStore = useAuthStore()
-		// const localePath = useLocalePath();
 
-		authStore.setAuthUser(result)
-		authStore.setAuthStatus(true)
+		authStore.setSession(result)
+		authStore.setSessionAuthStatus(true)
 
-    const appConfig = useConfig()
+    if(options.redirectUrl){
+      const { navigateToWithLocale } = useRedirect()
 
-		// navigateTo(localePath(appConfig.middleware.auth.errorRedirectUrl))
-		navigateTo(appConfig.middleware.auth.errorRedirectUrl)
-
-
-		// navigateTo(localePath(appRoutes.dashboard))
+      navigateToWithLocale(options.redirectUrl)
+    }
 
 		return true
 	}
 }
 
-export const emailPasswordLogIn = async (requestData: LogInRequestData): Promise<boolean| null> => {
-	const { postMethod } = useApiFetch()
+export const emailPasswordLogIn = async <T = LogInRequestData>(requestData: T): Promise<boolean| null> => {
 
-	const result = await postMethod(serverAuthRoutes.logIn, requestData) as BaseRequestResult<AuthResponseData>
+  const { fetchWithAuth } = useAuthFetch()
 
-	return setAuthUserAfterSignIn(result)
+  const config = useConfig()
+
+	const result = await fetchWithAuth(config.endpoints.signIn.path, config.endpoints.signIn.method, requestData)
+
+	return setSessionAfterSignIn(result, {
+    redirectUrl: config.endpoints.signIn.redirectUrl
+  })
 
 }
 
-export const emailPasswordSignUp = async (requestData: SignInRequestData): Promise<boolean| null> => {
-	const { postMethod } = useApiFetch()
+export const emailPasswordSignUp = async <T = SignInRequestData>(requestData: T): Promise<boolean| null> => {
 
-	const result = await postMethod(serverAuthRoutes.signUp, requestData) as BaseRequestResult<AuthResponseData>
+  const { fetchWithAuth } = useAuthFetch()
 
-	return setAuthUserAfterSignIn(result)
+  const config = useConfig()
+
+	const result = await fetchWithAuth(config.endpoints.signUp.path, config.endpoints.signUp.method,  requestData)
+
+	return setSessionAfterSignIn(result, {
+    redirectUrl: config.endpoints.signUp.redirectUrl
+  })
 
 }

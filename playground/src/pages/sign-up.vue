@@ -1,5 +1,10 @@
 <template>
   <div class=" mt-36 mx-auto w-full  max-w-[400px]">
+
+    <h1 class=" text-black text-center font-bold text-xl my-3">
+      Sign Up
+    </h1>
+
 		<form
 			@submit.prevent="onSubmit"
 			class="flex flex-col gap-y-3 w-full"
@@ -37,6 +42,22 @@
       />
     </div>
 
+    <div>
+      <label
+        for="user-password-confirmation"
+        class="block mb-2 text-sm font-medium text-gray-900 "
+      >
+        Password
+      </label>
+      <input
+        type="password"
+        id="user-password-confirmation"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+        required
+        v-model="formData.passwordConfirmation"
+      />
+    </div>
+
     <button
       type="submit"
       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
@@ -57,14 +78,14 @@ definePageMeta({
 
 const formData = reactive({
   email: '',
-  password: ''
+  password: '',
+  passwordConfirmation: ''
 })
 
-const { emailPasswordLogIn } = useAuthActions()
+const { emailPasswordSignUp } = useAuthActions()
 
 const onSubmit = async () => {
-
-	const result = await emailPasswordLogIn(formData)
+	const result = await emailPasswordSignUp(formData)
 
 	console.log('login result', result);
 }

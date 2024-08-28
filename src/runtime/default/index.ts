@@ -1,20 +1,39 @@
 import type { ModuleOptions } from "../types/options";
 
 export const moduleOptionsDefault: ModuleOptions = {
-  apiBaseUrl: 'http://localhost:3000/',
+  apiBaseUrl: 'http://localhost:3000',
+  redirectWithI18n: false,
   middleware: {
     auth: {
-      errorRedirectUrl: '/login'
+      errorRedirectUrl: 'login'
     },
     'not-auth': {
-      errorRedirectUrl: '/dashboard'
+      errorRedirectUrl: 'dashboard'
     },
   },
   endpoints: {
-    signIn: { path: 'log-in', method: 'post' },
-    signOut: { path: 'logout', method: 'post', redirectUrl: '/login' },
-    signUp: { path: 'sign-up', method: 'post' },
-    getSession: { path: 'profile', method: 'get' },
-    refresh: { path: 'refresh-token', method: 'post' },
+    signIn: {
+      path: 'auth/log-in',
+      method: 'post',
+      redirectUrl: 'dashboard'
+    },
+    signOut: {
+      path: 'auth/logout',
+      method: 'post',
+      redirectUrl: 'login'
+    },
+    signUp: {
+      path: 'auth/sign-up',
+      method: 'post',
+      redirectUrl: 'dashboard'
+    },
+    getSession: {
+      path: 'auth/profile',
+      method: 'get'
+    },
+    refresh: {
+      path: 'auth/refresh-token',
+      method: 'post'
+    },
   }
 }

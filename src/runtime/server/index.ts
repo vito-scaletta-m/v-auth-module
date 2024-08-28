@@ -1,51 +1,55 @@
-import type { AuthResponseData, LogoutResponseData } from "../types/index"
+import type { LogoutResponseData } from "../types/index"
 import type { BaseRequestResult } from "../types/index"
 import { isResponseInvalid } from "../helpers/response"
 import { useAuthStore } from "../store"
-import { serverAuthRoutes } from ".."
-import { authFetch, useConfig } from "../composables"
-// import { navigateTo } from '#imports'; // AS IN EXAMPLE
+import useRedirect from "../composables/useRedirect"
+import useConfig from "../composables/useConfig"
+import useAuthFetch from "../composables/useAuthFetch"
 
-export const logOut = async (): Promise<boolean| null> => {
-	const { fetchWithAuth } = authFetch()
+export const logOut = async <T = LogoutResponseData>(): Promise<boolean| null> => {
+	const { fetchWithAuth } = useAuthFetch()
 
-	const result = await fetchWithAuth(serverAuthRoutes.logout, 'POST') as BaseRequestResult<LogoutResponseData>
+  const config = useConfig()
+
+	const result = await fetchWithAuth(config.endpoints.signOut.path, config.endpoints.signOut.method) as
+    BaseRequestResult<T>
 
 	if(isResponseInvalid(result)){
 		return null
 	} else {
 		const authStore = useAuthStore()
-		// const localePath = useLocalePath();
-		authStore.clearAuthUser()
-		authStore.setAuthStatus(false)
-
+		authStore.clearSession()
+		authStore.setSessionAuthStatus(false)
 
     const appConfig = useConfig()
 
-		// navigateTo(localePath(appConfig.endpoints.signOut.redirectUrl))
-		navigateTo(appConfig.endpoints.signOut.redirectUrl)
+    const { navigateToWithLocale } = useRedirect()
 
-		// navigateTo(localePath(appRoutes.logIn))
+    if(appConfig.endpoints.signOut.redirectUrl){
+      navigateToWithLocale(appConfig.endpoints.signOut.redirectUrl)
+    }
 
-		return true
+
+    return true
 	}
 }
 
+
+// DEPRECATED
 // get current auth user
-export const userProfile = async ()=> {
-	const { fetchWithAuth } = authFetch()
+// export const userProfile = async ()=> {
+// 	const { fetchWithAuth } = useAuthFetch()
 
-	const result = await fetchWithAuth(serverAuthRoutes.userProfile, 'GET') as BaseRequestResult<AuthResponseData>
+//   const config = useConfig()
 
-	// console.log('user profile result', result);
+// 	const result = await fetchWithAuth(config.endpoints.getSession.path, config.endpoints.getSession.method) as BaseRequestResult<AuthUserDataType>
 
-
-	if(isResponseInvalid(result)){
-		return null
-	} else {
-		const authStore = useAuthStore()
-		authStore.setAuthUser(result)
-		authStore.setAuthStatus(true)
-		return true
-	}
-}
+// 	if(isResponseInvalid(result)){
+// 		return null
+// 	} else {
+// 		const authStore = useAuthStore()
+// 		authStore.setSession(result)
+// 		authStore.setSessionAuthStatus(true)
+// 		return true
+// 	}
+// }

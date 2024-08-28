@@ -1,13 +1,8 @@
-import { useConfig } from "."
-// import { useCookie } from '#imports'; // AS IN EXAMPLE
-import { serverAuthRoutes } from ".."
+import useConfig from "../composables/useConfig"
 import type { AuthUserDataType, RefreshAccessTokenType } from "../types"
 
 export const defaultRequestAction = (middlewareAccessToken?: string) => {
 	const config = useConfig()
-
-  console.log('api base url', config.apiBaseUrl);
-
 
 	const accessToken = middlewareAccessToken || getAccessToken()
 
@@ -15,8 +10,6 @@ export const defaultRequestAction = (middlewareAccessToken?: string) => {
 		baseURL: `${config.apiBaseUrl}`,
 		credentials: 'include',
 		retry: false,
-
-		// @ts-ignore // TODO
 		headers: {
 			authorization: import.meta.server && accessToken
 		}
@@ -30,8 +23,10 @@ export const refreshAccessToken = async (middlewareRefreshToken?: string): Promi
 
 		const refreshToken = middlewareRefreshToken || getRefreshToken()
 
-		const response = await defaultRequestAction()(serverAuthRoutes.refreshToken, {
-			method: 'POST',
+    const config = useConfig()
+
+		const response = await defaultRequestAction()(config.endpoints.refresh.path, {
+			method: config.endpoints.refresh.method,
 			body: {
 				refreshToken: import.meta.server && refreshToken,
 				isServerSide: import.meta.server
@@ -46,11 +41,14 @@ export const refreshAccessToken = async (middlewareRefreshToken?: string): Promi
 	}
 }
 
-export const defineAuthUser = async (middlewareAccessToken?: string): Promise<AuthUserDataType | null> => {
+export const defineSession = async <T = AuthUserDataType>(middlewareAccessToken?: string): Promise<T | null> => {
 	try {
-		const response = await defaultRequestAction(middlewareAccessToken)(serverAuthRoutes.userProfile, {
-			method: 'GET',
-		}) as AuthUserDataType
+
+    const config = useConfig()
+
+		const response = await defaultRequestAction(middlewareAccessToken)(config.endpoints.getSession.path, {
+			method: config.endpoints.getSession.method,
+		}) as T
 
 		return response
 
@@ -62,7 +60,6 @@ export const defineAuthUser = async (middlewareAccessToken?: string): Promise<Au
 
 export const getAccessToken = () => {
 	try {
-    console.log('t is server', import.meta.server);
 		if (import.meta.server) {
 			const accessToken = useCookie('accessToken')?.value
 			// console.log('access token', accessToken);

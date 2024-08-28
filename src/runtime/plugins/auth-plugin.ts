@@ -1,21 +1,19 @@
-import { defineNuxtPlugin } from "#imports"; // AS IN EXAMPLE
-import { useCookie } from 'nuxt/app';  // AS IN EXAMPLE
-import { useAuthStore } from "../store";
-import type { AuthUserDataType } from "../types";
+// DEPRECATED
 
-export default defineNuxtPlugin((nuxtApp) => {
+// import { defineNuxtPlugin } from "#imports";
+// import { useCookie } from "#imports";
+// import { useAuthStore } from "../store";
 
-	console.log('auth plugin');
+// export default defineNuxtPlugin((nuxtApp) => {
 
-	const authUserCookie = useCookie('authUser')?.value as AuthUserDataType | undefined;
+// 	const sessionCookie = useCookie('session')?.value as any
 
-  console.log('authUserCookie', authUserCookie);
+//   console.log('auth plugin', sessionCookie);
 
 
-	if(authUserCookie){
-    const authStore = useAuthStore()
-
-		authStore.setAuthUser(authUserCookie) // ADD TYPE
-		authStore.setAuthStatus(true)
-	}
-});
+// 	if(sessionCookie){
+//     const authStore = useAuthStore()
+// 		authStore.setSession(sessionCookie)
+// 		authStore.setSessionAuthStatus(true)
+// 	}
+// });
