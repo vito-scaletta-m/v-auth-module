@@ -7,7 +7,7 @@ import useConfig from "../composables/useConfig"
 import useAuthFetch from "../composables/useAuthFetch"
 
 export const logOut = async <T = LogoutResponseData>(): Promise<boolean| null> => {
-	const { fetchWithAuth } = useAuthFetch()
+	const fetchWithAuth= useAuthFetch()
 
   const config = useConfig()
 

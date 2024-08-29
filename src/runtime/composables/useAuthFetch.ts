@@ -41,9 +41,8 @@ const useAuthFetch =  () =>  {
 		}
 	}
 
-	return {
-		fetchWithAuth
-	}
+	return fetchWithAuth
+
 
 }
 

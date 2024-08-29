@@ -31,7 +31,7 @@ const setSessionAfterSignIn = (result: any, options: {
 
 export const emailPasswordLogIn = async <T = LogInRequestData>(requestData: T): Promise<boolean| null> => {
 
-  const { fetchWithAuth } = useAuthFetch()
+  const fetchWithAuth = useAuthFetch()
 
   const config = useConfig()
 
@@ -45,7 +45,7 @@ export const emailPasswordLogIn = async <T = LogInRequestData>(requestData: T): 
 
 export const emailPasswordSignUp = async <T = SignInRequestData>(requestData: T): Promise<boolean| null> => {
 
-  const { fetchWithAuth } = useAuthFetch()
+  const fetchWithAuth = useAuthFetch()
 
   const config = useConfig()
 

@@ -1,5 +1,6 @@
 import useConfig from "../composables/useConfig"
 import type { AuthUserDataType, RefreshAccessTokenType } from "../types"
+import { useCookie } from "#imports"
 
 export const defaultRequestAction = (middlewareAccessToken?: string) => {
 	const config = useConfig()
@@ -68,7 +69,7 @@ export const getAccessToken = () => {
 		// console.log('no access token...');
 		return null
 	} catch (error) {
-		console.log('error in get access token');
+		console.log('error in get access token', error);
 		return null
 	}
 }
